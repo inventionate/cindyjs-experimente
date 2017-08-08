@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>exponentialfunktionen.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "Text0", type: "Plot", pos: [-3.7196261682242993, -4.0, -0.4672897196261682], color: [0.0, 0.0, 0.0]},
+    {name: "Text1", type: "Plot", pos: [-2.707692307692308, -4.0, -0.3846153846153846], color: [0.0, 0.0, 0.0], text: "f(x)=A.x^x"},
+    {name: "A", type: "Free", pos: [1.8271604938271602, -4.0, 1.2345679012345678], color: [1.0, 0.0, 0.0], labeled: true}
+  ],
+  ports: [{
+    id: "CSCanvas",
+    width: 941,
+    height: 618,
+    transform: [{visibleRect: [-12.42, 18.26, 25.22, -6.46]}],
+    axes: true,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  cinderella: {build: 1901, version: [2, 9, 1901]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>
