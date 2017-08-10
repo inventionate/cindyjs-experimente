@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <title>Integral.cdy</title>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        #CSConsole {
+            background-color: #FAFAFA;
+            border-top: 1px solid #333333;
+            bottom: 0px;
+            height: 200px;
+            overflow-y: scroll;
+            position: fixed;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cindyjs.org/dist/v0.8/CindyJS.css">
+    <script type="text/javascript" src="https://cindyjs.org/dist/v0.8/Cindy.js"></script>
+<script id="csdraw" type="text/x-cindyscript">
+f(x):=parse(Text0.val); //.001*x^3+0.01*x^2-0.2*x+3;
+plot(f(x),size->2);
+
+
+ff(x):=parse(Text1.val); //.001*x^3+0.01*x^2-0.2*x+3;
+plot(ff(x),size->2,color->grey(0));
+
+
+;A.y=0;
+B.y=0;
+
+
+;d=B.x-A.x;
+n=round(C.x*10);
+h=d/n;
+
+
+Obersumme=0;
+Mittelsumme=0;
+Untersumme=0;
+
+//Obersumme -------------------------------------------------------
+
+if(ButtonOS.pressed==true,
+ x=A.x;
+ repeat(n,
+	H=max(f(x),f(x+h));
+	balken=([x,0],[x+h,0],[x+h,H],[x,H]);
+	drawpoly(balken,color->grey(1));err(balken);
+	fillpoly(balken,alpha->.2,color->grey(1));
+	draw((x,Obersumme),color->grey(1));
+	x=x+h;
+	Obersumme=Obersumme+h*H;
+
+ );
+ drawtext((5,15),Obersumme);// Obersumme neben Button
+);
+
+
+//Mittelsumme -------------------------------------------------------
+
+if(ButtonMS.pressed==true,
+ x=A.x;
+ repeat(n,
+	H=f(x+0.5*h);
+	balken=([x,0],[x+h,0],[x+h,H],[x,H]);
+	drawpoly(balken,color->grey(1));
+	fillpoly(balken,alpha->.4,color->(.5,.2,1));
+	draw((x,Mittelsumme),color->(.5,.2,1));
+	x=x+h;
+	Mittelsumme=Mittelsumme+h*H;
+ );
+ drawtext((5,13.5),Mittelsumme); // Mittelsumme neben Button
+);
+
+
+//Untersumme -------------------------------------------------------
+
+if(ButtonUS.pressed==true,
+ x=A.x;
+ repeat(n,
+	H=min(f(x),f(x+h));
+	balken=([x,0],[x+h,0],[x+h,H],[x,H]);
+	drawpoly(balken,color->grey(1));
+	fillpoly(balken,alpha->.5,color->green(.7));
+	draw((x,Untersumme));
+	x=x+h;
+
+	Untersumme=Untersumme+h*H;
+ );
+ drawtext((5,12),Untersumme);// Untersumme neben Button
+);
+
+
+
+
+;
+</script>
+    <script type="text/javascript">
+var cdy = CindyJS({
+  scripts: "cs*",
+  defaultAppearance: {
+    dimDependent: 0.7,
+    fontFamily: "sans-serif",
+    lineSize: 1,
+    pointSize: 5.0,
+    textsize: 12.0
+  },
+  angleUnit: "°",
+  geometry: [
+    {name: "A", type: "Free", pos: [4.0, -0.0, -0.5714285714285714], color: [1.0, 0.0, 0.0], labeled: true},
+    {name: "B", type: "Free", pos: [4.0, 0.0, 1.1287971532886323], color: [1.0, 0.0, 0.0], labeled: true},
+    {name: "C", type: "Free", pos: [4.0, 0.9186602870813397, 0.21963836156493324], color: [1.0, 0.0, 0.0], labeled: true, printname: "Schrittweite"},
+    {name: "Text0", type: "EditableText", color: [0.0, 0.0, 0.0], fillcolor: [1.0, 0.784, 0.0], fillalpha: 0.5, minwidth: 300, text: "0.4*x^2+2*x", dock: {corner: "UL", offset: [167.0, -20.0]}},
+    {name: "Text1", type: "EditableText", pos: [1.1912596096794885, -4.0, -0.23874252684491462], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 0.784, 0.0], fillalpha: 0.5, minwidth: 300, text: "0.4*(x^3)/3+2*x^2/2"},
+    {name: "ButtonOS", type: "ToggleButton", pos: [-0.39119431118022924, -4.0, -0.26323537639964334], color: [0.0, 0.0, 0.0], fillcolor: [1.0, 1.0, 1.0], fillalpha: 0.27272728085517883, pressed: true, text: "Obersumme"},
+    {name: "ButtonUS", type: "ToggleButton", pos: [-0.4630160226237997, -4.0, -0.3284446124776444], color: [0.0, 0.0, 0.0], fillcolor: [0.714, 1.0, 0.667], fillalpha: 0.27272728085517883, pressed: true, text: "Untersumme"},
+    {name: "ButtonMS", type: "ToggleButton", pos: [-0.4237385640832005, -4.0, -0.29265490258419363], color: [0.0, 0.0, 0.0], fillcolor: [0.831, 0.639, 1.0], fillalpha: 0.27272728085517883, pressed: true, text: "Mittelsumme"}
+  ],
+  ports: [{
+    id: "CSCanvas",
+    width: 1062,
+    height: 845,
+    transform: [{visibleRect: [-9.861069819811446, 18.168186074497964, 20.985634594444093, -6.375566496166752]}],
+    axes: true,
+    snap: true,
+    background: "rgb(168,176,192)"
+  }],
+  csconsole: false,
+  cinderella: {build: 1901, version: [2, 9, 1901]}
+});
+    </script>
+</head>
+<body>
+    <div id="CSCanvas"></div>
+</body>
+</html>
